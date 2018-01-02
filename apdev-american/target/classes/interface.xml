@@ -6,13 +6,19 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <http:listener-config name="ap-dev-httpListenerConfig" host="0.0.0.0" port="8082" doc:name="HTTP Listener Configuration"/>
     <apikit:config name="ap-dev-config" raml="ap-dev.raml" consoleEnabled="false" doc:name="Router"/>
     <flow name="ap-dev-main">
-        <http:listener config-ref="ap-dev-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <http:listener config-ref="ap-dev-httpListenerConfig" path="/api/flights" doc:name="HTTP"/>
         <apikit:router config-ref="ap-dev-config" doc:name="APIkit Router"/>
         <exception-strategy ref="ap-dev-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
     </flow>
     <flow name="ap-dev-console">
         <http:listener config-ref="ap-dev-httpListenerConfig" path="/console/*" doc:name="HTTP"/>
         <apikit:console config-ref="ap-dev-config" doc:name="APIkit Console"/>
+    </flow>
+    <flow name="interfaceFlow">
+        <flow-ref name="GETFLIGHTS" doc:name="GETFLIGHTS"/>
+    </flow>
+    <flow name="interfaceFlow1">
+        <flow-ref name="GETFLIGHTSBYID" doc:name="GETFLIGHTSBYID"/>
     </flow>
     <flow name="get:/ap-dev:ap-dev-config">
         <set-payload value="[&#xA;{&#xA;&quot;book&quot; : &quot;json&quot;&#xA;},&#xA;{&#xA;&quot;name&quot; : &quot;jojo&quot;&#xA;}&#xA;]" doc:name="Set Payload"/>
