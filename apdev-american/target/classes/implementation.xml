@@ -13,7 +13,6 @@ http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/m
     <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="root" password="Welcome123" database="mulesoft" doc:name="MySQL Configuration"/>
     <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
     <flow name="GETFLIGHTS">
-        <http:listener config-ref="HTTP_Listener_Configuration" path="/flights" allowedMethods="GET" doc:name="HTTP"/>
         <db:select config-ref="MySQL_Configuration" doc:name="Database">
             <db:parameterized-query><![CDATA[Select * from USER_PLACE;]]></db:parameterized-query>
         </db:select>
@@ -32,7 +31,6 @@ payload map ((payload01 , indexOfPayload01) -> {
         </dw:transform-message>
     </flow>
     <flow name="GETFLIGHTSBYID">
-        <http:listener config-ref="HTTP_Listener_Configuration" path="/flights/{ID}" allowedMethods="GET" doc:name="HTTP"/>
         <db:select config-ref="MySQL_Configuration" doc:name="Database">
             <db:parameterized-query><![CDATA[Select * from USER_PLACE WHERE ID = #[message.inboundProperties.'http.uri.params'.ID];]]></db:parameterized-query>
         </db:select>
@@ -51,7 +49,6 @@ payload map ((payload01 , indexOfPayload01) -> {
         </dw:transform-message>
     </flow>
     <flow name="apdev-americanFlow">
-        <http:listener config-ref="HTTP_Listener_Configuration" path="/flights" allowedMethods="POST" doc:name="HTTP"/>
         <set-payload value="{&quot;message&quot;: &quot;flights added (but not really)&quot;}" doc:name="Set Payload"/>
     </flow>
 </mule>
